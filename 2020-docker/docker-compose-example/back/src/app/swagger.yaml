@@ -1,0 +1,120 @@
+openapi: 3.0.0
+info:
+  title: Drag&Win API
+  description: API
+  version: 0.2.0
+paths:
+  /api/v1/todos:
+    post:
+      summary: Create TODO
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateTodo'
+      responses:
+        '200':
+          description: ok
+
+    get:
+      summary: Get TODOs
+      responses:
+        '200':
+          description: ok
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TodoArray'
+
+  /api/v1/todos/{id}:
+
+
+
+    patch:
+      summary: Update TODO
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateTodo'
+      responses:
+        '200':
+          description: ok
+
+    delete:
+      summary: Delete TODO
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: ok
+
+    get:
+      summary: Get TODO
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: ok
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Todo'
+
+components:
+  schemas:
+    Todo:
+      type: object
+      properties:
+        _id:
+          type: string
+        task:
+          type: string
+        status:
+          type: string
+          enum: [new, progress, failed, done, stopped]
+        updatedAt:
+          type: string
+          format: date-time
+        createdAt:
+          type: string
+          format: date-time
+
+    CreateTodo:
+      type: object
+      properties:
+        task:
+          type: string
+      required:
+        - task
+
+    UpdateTodo:
+      type: object
+      properties:
+        task:
+          type: string
+        status:
+          type: string
+          enum: [new, progress, failed, done, stopped]
+
+
+    TodoArray:
+      type: array
+      items:
+        $ref: '#/components/schemas/Todo'

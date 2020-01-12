@@ -1,0 +1,10 @@
+{
+  "APP_PORT": 8080,
+  "MONGODB": {
+    "HOST": "mongo",
+    "PORT": "27017",
+    "DATABASE": "todos",
+    "USER": "root",
+    "PASSWORD": "testpass"
+  }
+}
