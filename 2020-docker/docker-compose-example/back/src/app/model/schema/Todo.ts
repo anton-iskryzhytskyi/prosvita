@@ -20,7 +20,7 @@ export interface Todo extends TodoAttributes, mongoose.Document {}
 
 const schema = new mongoose.Schema({
   task: { type: String, required: true },
-  status: { type: Number, required: true, enum: ['new', 'progress', 'failed', 'done', 'stopped'] },
+  status: { type: String, required: true, enum: ['new', 'progress', 'failed', 'done', 'stopped'] },
 }, {
   collection: 'Todo',
   autoIndex: true,

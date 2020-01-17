@@ -1,6 +1,6 @@
 openapi: 3.0.0
 info:
-  title: Drag&Win API
+  title: Prosvita Docker-Compose example
   description: API
   version: 0.2.0
 paths:
