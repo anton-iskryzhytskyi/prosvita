@@ -10,14 +10,16 @@ services:
       - '27019:27017'
     volumes:
       - mongo:/data/db
- # back:
- #   image: prosvita-back:latest
- #   restart: always
- #   ports:
- #     - '3000:3000'
- # front:
- #   image: prosvita-front:latest
- #   ports:
- #     - '3001:80'
+  back:
+    image: prosvita-back:latest
+    restart: always
+    ports:
+      - '3000:3000'
+    environment:
+      - NODE_ENV=production
+  front:
+    image: prosvita-front:latest
+    ports:
+      - '3010:80'
 volumes:
   mongo:
