@@ -1,6 +1,6 @@
 # ProsvITa 2020, Docker, Acropolium
 
-## Docker installation
+## How to
 * check you have [git](https://git-scm.com/downloads) installed
 * clone this repo into your computer via git
 * go to official [docker site](https://docs.docker.com/)
