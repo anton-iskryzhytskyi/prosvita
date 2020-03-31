@@ -1,25 +1,18 @@
 import { Request, Response } from 'express'
 import { TodoAttributes, TodoModel, TodoStatus } from '../model'
-import { createLogger } from '../shared'
+import { createLogger, withCatch } from '../shared'
 
 const logger = createLogger({ name: 'handlers/categories' })
 
-export const create = async (req: Request, res: Response, next) => {
-  try {
+export const create = withCatch(async (req: Request, res: Response) => {
     const todo: Partial<TodoAttributes> = { task: req.body.task, status: TodoStatus.new }
 
     await TodoModel.create(todo)
 
     res.send({})
-  } catch (e) {
-    logger.warn(e)
+}, logger)
 
-    next(e)
-  }
-}
-
-export const update = async (req: Request, res: Response, next) => {
-  try {
+export const update = withCatch(async (req: Request, res: Response) => {
     const update = req.body
 
     const { id } = req.params
@@ -27,40 +20,27 @@ export const update = async (req: Request, res: Response, next) => {
     await TodoModel.updateOne({ _id: id }, update).exec()
 
     res.send({})
-  } catch (e) {
-    logger.warn(e)
+}, logger)
 
-    next(e)
-  }
-}
-
-export const remove = async (req: Request, res: Response, next) => {
-  try {
+export const remove = withCatch(async (req: Request, res: Response) => {
     const { id } = req.params
 
     await TodoModel.deleteOne({ _id: id }).exec()
 
     res.send({})
-  } catch (e) {
-    logger.warn(e)
+}, logger)
 
-    next(e)
-  }
-}
+export const get = withCatch(async (req: Request, res: Response) => {
+    const limit = req.query.limit ? Number(req.query.limit) : 10
+    const skip = req.query.skip ? Number(req.query.skip) : 0
+    const query: any = { }
 
-export const get = async (req: Request, res: Response, next) => {
-  try {
-    const { id } = req.params
-    if (id) {
-      res.send(await TodoModel.findById(id))
+    if (req.query.name) { query.name = new RegExp(req.query.name) }
 
-      return
-    }
+    const data = await TodoModel.find(query)
+      .skip(skip)
+      .limit(limit)
+      .exec()
 
-    res.send(await TodoModel.find({}))
-  } catch (e) {
-    logger.warn(e)
-
-    next(e)
-  }
-}
+    res.send(data)
+}, logger)
