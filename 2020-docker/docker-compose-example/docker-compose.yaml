@@ -11,14 +11,14 @@ services:
     volumes:
       - mongo:/data/db
   back:
-    image: prosvita-back:latest
+    build: ./back
     restart: always
     ports:
       - '3000:3000'
     environment:
       - NODE_ENV=production
   front:
-    image: prosvita-front:latest
+    build: ./front
     ports:
       - '3010:80'
 volumes:
