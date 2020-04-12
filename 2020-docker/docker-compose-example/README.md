@@ -1,7 +1,3 @@
-## build services
-```bash
-    ./build.sh
-```
 ## run services
 ```bash
     ./run.sh
